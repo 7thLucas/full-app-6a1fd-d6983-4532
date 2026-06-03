@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { prop, getModelForClass, modelOptions } from "@typegoose/typegoose";
 
 export enum ShiftStatus {
@@ -18,34 +19,34 @@ export enum ShiftPeriod {
 
 @modelOptions({ schemaOptions: { collection: "tbl_barista_shifts", timestamps: true } })
 export class BaristaShiftEntity {
-  @prop({ required: true })
+  @prop({ type: () => String, required: true })
   date!: string; // YYYY-MM-DD
 
-  @prop({ required: true, trim: true })
+  @prop({ type: () => String, required: true, trim: true })
   barista_name!: string;
 
-  @prop({ required: true, trim: true })
+  @prop({ type: () => String, required: true, trim: true })
   barista_email?: string;
 
-  @prop({ required: true })
+  @prop({ type: () => String, required: true })
   start_time!: string; // "07:00"
 
-  @prop({ required: true })
+  @prop({ type: () => String, required: true })
   end_time!: string; // "15:00"
 
-  @prop({ enum: ShiftPeriod, default: ShiftPeriod.Morning })
+  @prop({ type: () => String, enum: ShiftPeriod, default: ShiftPeriod.Morning })
   period!: ShiftPeriod;
 
-  @prop({ trim: true, default: "Barista" })
+  @prop({ type: () => String, trim: true, default: "Barista" })
   role!: string;
 
-  @prop({ enum: ShiftStatus, default: ShiftStatus.Scheduled })
+  @prop({ type: () => String, enum: ShiftStatus, default: ShiftStatus.Scheduled })
   status!: ShiftStatus;
 
-  @prop({ default: false })
+  @prop({ type: () => Boolean, default: false })
   is_peak_hour!: boolean;
 
-  @prop({ trim: true, default: "" })
+  @prop({ type: () => String, trim: true, default: "" })
   notes?: string;
 }
 

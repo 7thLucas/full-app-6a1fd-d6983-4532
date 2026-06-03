@@ -1,36 +1,37 @@
+import "reflect-metadata";
 import { prop, getModelForClass, modelOptions } from "@typegoose/typegoose";
 
 export class SalesCategoryBreakdown {
-  @prop({ required: true })
+  @prop({ type: () => String, required: true })
   category!: string;
 
-  @prop({ required: true, default: 0 })
+  @prop({ type: () => Number, required: true, default: 0 })
   amount!: number;
 
-  @prop({ required: true, default: 0 })
+  @prop({ type: () => Number, required: true, default: 0 })
   transactions!: number;
 }
 
 export class HourlySalesEntry {
-  @prop({ required: true })
+  @prop({ type: () => Number, required: true })
   hour!: number; // 0-23
 
-  @prop({ required: true, default: 0 })
+  @prop({ type: () => Number, required: true, default: 0 })
   amount!: number;
 
-  @prop({ required: true, default: 0 })
+  @prop({ type: () => Number, required: true, default: 0 })
   transactions!: number;
 }
 
 @modelOptions({ schemaOptions: { collection: "tbl_daily_sales", timestamps: true } })
 export class DailySalesEntity {
-  @prop({ required: true })
+  @prop({ type: () => String, required: true })
   date!: string; // ISO date string YYYY-MM-DD
 
-  @prop({ required: true, default: 0 })
+  @prop({ type: () => Number, required: true, default: 0 })
   total_revenue!: number;
 
-  @prop({ required: true, default: 0 })
+  @prop({ type: () => Number, required: true, default: 0 })
   total_transactions!: number;
 
   @prop({ type: () => [SalesCategoryBreakdown], default: [] })
@@ -39,7 +40,7 @@ export class DailySalesEntity {
   @prop({ type: () => [HourlySalesEntry], default: [] })
   hourly_breakdown!: HourlySalesEntry[];
 
-  @prop({ trim: true, default: "" })
+  @prop({ type: () => String, trim: true, default: "" })
   notes?: string;
 }
 

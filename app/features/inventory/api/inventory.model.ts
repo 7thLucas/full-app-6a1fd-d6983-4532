@@ -1,27 +1,28 @@
+import "reflect-metadata";
 import { prop, getModelForClass, modelOptions, index } from "@typegoose/typegoose";
 
 @modelOptions({ schemaOptions: { collection: "tbl_bean_inventory", timestamps: true } })
 @index({ name: 1 }, { unique: true })
 export class BeanInventoryEntity {
-  @prop({ required: true, trim: true })
+  @prop({ type: () => String, required: true, trim: true })
   name!: string;
 
-  @prop({ required: true, trim: true })
+  @prop({ type: () => String, required: true, trim: true })
   origin!: string;
 
-  @prop({ required: true, default: 0 })
+  @prop({ type: () => Number, required: true, default: 0 })
   quantity_kg!: number;
 
-  @prop({ required: true, default: 2 })
+  @prop({ type: () => Number, required: true, default: 2 })
   low_stock_threshold_kg!: number;
 
-  @prop({ required: true, default: 0.5 })
+  @prop({ type: () => Number, required: true, default: 0.5 })
   critical_stock_threshold_kg!: number;
 
-  @prop({ trim: true, default: "" })
+  @prop({ type: () => String, trim: true, default: "" })
   notes?: string;
 
-  @prop({ default: true })
+  @prop({ type: () => Boolean, default: true })
   is_active!: boolean;
 }
 
