@@ -15,22 +15,43 @@ const router = Router();
 
 async function discoverRouteFiles(): Promise<string[]> {
   const modulesPath = path.join(process.cwd(), "app", "modules");
-  const moduleEntries = await readdir(modulesPath, { withFileTypes: true }).catch((error) => {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return [];
-    }
-
-    throw error;
-  });
+  const featuresPath = path.join(process.cwd(), "app", "features");
 
   const routeFilesSet = new Set<string>();
 
+  // Scan modules directory
+  const moduleEntries = await readdir(modulesPath, { withFileTypes: true }).catch((error) => {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  });
+
   for (const entry of moduleEntries) {
     if (!entry.isDirectory()) continue;
-
     const modulePath = path.join(modulesPath, entry.name);
     const scanPaths = [modulePath, path.join(modulePath, "src", "routes")];
+    for (const scanPath of scanPaths) {
+      const files = await readdir(scanPath, { withFileTypes: true }).catch(() => []);
+      for (const file of files) {
+        if (file.isFile() && routeFilePattern.test(file.name)) {
+          routeFilesSet.add(path.join(scanPath, file.name));
+        }
+      }
+    }
+  }
 
+  // Scan features directory (BrewOps app-specific features)
+  const featureEntries = await readdir(featuresPath, { withFileTypes: true }).catch((error) => {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  });
+
+  for (const entry of featureEntries) {
+    if (!entry.isDirectory()) continue;
+    const featurePath = path.join(featuresPath, entry.name);
+    const scanPaths = [
+      path.join(featurePath, "api"),
+      featurePath,
+    ];
     for (const scanPath of scanPaths) {
       const files = await readdir(scanPath, { withFileTypes: true }).catch(() => []);
       for (const file of files) {

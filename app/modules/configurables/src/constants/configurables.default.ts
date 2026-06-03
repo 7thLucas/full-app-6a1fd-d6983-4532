@@ -15,32 +15,53 @@ export type TBrandColor = {
 export type TDefaultConfigurableData = {
   appName: string;
   logoUrl: string;
+  tagline?: string;
   brandColor: TBrandColor;
-  // Mirror new schema fields here. Example:
-  //   maxItemsPerPage?: number;
-  //   enableNotifications?: boolean;
-  //   featuredCategories?: string[];
+  backgroundColor?: string;
+  surfaceColor?: string;
+  textPrimaryColor?: string;
+  textSecondaryColor?: string;
+  borderColor?: string;
+  successColor?: string;
+  warningColor?: string;
+  dangerColor?: string;
+  shopName?: string;
+  shopAddress?: string;
+  lowStockThresholdDefault?: number;
+  criticalStockThresholdDefault?: number;
+  peakHours?: string[];
+  salesCategories?: string[];
+  dashboardWelcomeMessage?: string;
+  enableShiftAlerts?: boolean;
+  enableLowStockAlerts?: boolean;
+  currencySymbol?: string;
 };
 
 export const defaultConfigurablesData: TDefaultConfigurableData = {
-  appName: "FILL_APP_NAME_HERE",
+  appName: "BrewOps",
   logoUrl: "FILL_LOGO_URL_HERE",
+  tagline: "Coffee Shop Operations, Simplified",
   brandColor: {
-    primary: "FILL_PRIMARY_COLOR_HERE",
-    secondary: "FILL_SECONDARY_COLOR_HERE",
-    accent: "FILL_ACCENT_COLOR_HERE",
+    primary: "#3B1F0A",
+    secondary: "#C8832A",
+    accent: "#E8A020",
   },
-  // ─────────────────────────────────────────────────────────────────────
-  // Add new field defaults here. See RULES.md §5 for per-type shape.
-  // Required branding fields → use the FILL_X_HERE placeholder pattern.
-  // Optional/typed defaults → real value with a "// fill it here" comment:
-  //
-  //   maxItemsPerPage: 12,                     // fill it here
-  //   enableNotifications: true,               // fill it here
-  //   featuredCategories: [],                  // fill it here
-  //   defaultLanguage: "en",                   // must match enum options
-  //   launchDate: "2025-01-01T00:00:00.000Z",  // ISO-8601
-  //   heroImage: "",                           // resolved URL after upload
-  //   galleryImages: [],                       // array of resolved URLs
-  // ─────────────────────────────────────────────────────────────────────
+  backgroundColor: "#FAF6F0",
+  surfaceColor: "#FFFFFF",
+  textPrimaryColor: "#1A0F00",
+  textSecondaryColor: "#7A6A5A",
+  borderColor: "#E8DDD0",
+  successColor: "#4A7C59",
+  warningColor: "#E8A020",
+  dangerColor: "#C0392B",
+  shopName: "My Coffee Shop",
+  shopAddress: "123 Main St",
+  lowStockThresholdDefault: 2,
+  criticalStockThresholdDefault: 0.5,
+  peakHours: ["Morning Rush (7-10am)", "Lunch (11am-1pm)", "Afternoon (3-5pm)"],
+  salesCategories: ["Espresso Drinks", "Drip Coffee", "Cold Brew", "Tea", "Food", "Merchandise"],
+  dashboardWelcomeMessage: "Good morning! Here's your operations overview.",
+  enableShiftAlerts: true,
+  enableLowStockAlerts: true,
+  currencySymbol: "$",
 };
